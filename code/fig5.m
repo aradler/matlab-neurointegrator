@@ -66,6 +66,6 @@ plot( ts, squeeze( ys( 1, 3, : ) ) );
 ylabel( 'Inhibitory Stimulus' ); 
 
 % Plot the inhibitory neuron:
-% subplot( 4, 1, 4 );
-% plot( ts, spike_rate( squeeze( ys( 1, 3, : ) ), ts ) );
-% ylabel( 'Spike rate' ); 
+subplot( 4, 1, 4 );
+plot( ts, spike_rate( squeeze( ys( 1, 3, : ) ), ts ) );
+ylabel( 'Spike rate' ); 

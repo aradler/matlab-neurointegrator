@@ -1,10 +1,8 @@
-function rate = spike_rate( Vs, ts )
-	[~, locs] = findpeaks( Vs );
-	
+function rate = spike_rate( Vs, ts )	
 	rate = zeros( size( ts ) );
-	lastLoc = 0;
+	lastLoc = 1;
 	for n = 2:length( rate )
-		if any( locs == n )
+		if Vs( n ) < 0 && Vs ( n-1 ) > 0
 			rate( n ) = 1 / (ts( n ) - ts( lastLoc ));
 			lastLoc = n;
 		else
