@@ -51,16 +51,21 @@ for n = 1:(length( ts )-1)
 end
 
 % Plot the tonic neuron:
-subplot( 3, 1, 1 );
+subplot( 4, 1, 1 );
 plot( ts, squeeze( ys( 1, 1, : ) ) );
 ylabel( 'Tonic stimulus' );
 
 % Plot the excitatory neuron:
-subplot( 3, 1, 2 );
+subplot( 4, 1, 2 );
 plot( ts, squeeze( ys( 1, 2, : ) ) );
 ylabel( 'Excitatory stimulus' );
 
 % Plot the inhibitory neuron:
-subplot( 3, 1, 3 );
+subplot( 4, 1, 3 );
 plot( ts, squeeze( ys( 1, 3, : ) ) );
 ylabel( 'Inhibitory Stimulus' ); 
+
+% Plot the inhibitory neuron:
+% subplot( 4, 1, 4 );
+% plot( ts, spike_rate( squeeze( ys( 1, 3, : ) ), ts ) );
+% ylabel( 'Spike rate' ); 
