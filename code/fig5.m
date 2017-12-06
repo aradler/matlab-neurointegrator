@@ -25,7 +25,7 @@ ext = @( t ) [ ext_T(t) ext_E(t) ext_I(t) ];
 
 % Initialize the time vector:
 len = 6000; % milliseconds
-dt = 0.02; % milliseconds
+dt = 0.04; % milliseconds
 ts = 0:dt:len;
 
 % Initialize the solutions vector ( [V, h, n, b] )
@@ -44,7 +44,7 @@ tau_b = 5;   % milliseconds
 % RK45 it on out
 for n = 1:(length( ts )-1)
 	% ys is a 3-dimensional array whose dimensions are
-	% [neuron, V/h/n/b, time]
+	% [V/h/n/b/s, neuron (tonic/excit/inhib), time]
 	k1 = TEI_neurons(ts(n), ys(:, :, n), ext( ts(n) ), tau_t, tau_b );
 	k2 = TEI_neurons(ts(n) + dt/2, ys(:, :, n) + dt/2 * k1, ext(ts(n)), tau_t, tau_b);
 	k3 = TEI_neurons(ts(n) + dt/2, ys(:, :, n) + dt/2 * k2, ext(ts(n)), tau_t, tau_b);
@@ -55,26 +55,46 @@ for n = 1:(length( ts )-1)
 	k2_mem = memory_neuron(ts(n) + dt/2, ys_mem( :, n ) + dt/2 * k1, ys(:, :, n), tau_t);
 	k3_mem = memory_neuron(ts(n) + dt/2, ys_mem( :, n ) + dt/2 * k2, ys(:, :, n), tau_t);
 	k4_mem = memory_neuron(ts(n) + dt, ys_mem( :, n ) + dt * k3, ys(:, :, n), tau_t);
-	ys_mem(:, :, n+1) = ys_mem(:, n) + (dt / 6 .* (k1_mem + 2*k2_mem + 2*k3_mem + k4_mem));
+	ys_mem(:, n+1) = ys_mem(:, n) + (dt / 6 .* (k1_mem + 2*k2_mem + 2*k3_mem + k4_mem));
 
 end
 
 % Plot the tonic neuron:
-subplot( 4, 1, 1 );
+subplot( 4, 2, 1 );
 plot( ts, squeeze( ys( 1, 1, : ) ) );
 ylabel( 'Tonic stimulus' );
 
+% Plot the tonic neuron:
+subplot( 4, 2, 2 );
+plot( ts, squeeze( ys( 5, 1, : ) ) );
+ylabel( 'Tonic integral' );
+
 % Plot the excitatory neuron:
-subplot( 4, 1, 2 );
+subplot( 4, 2, 3 );
 plot( ts, squeeze( ys( 1, 2, : ) ) );
 ylabel( 'Excitatory stimulus' );
 
+% Plot the excitatory neuron:
+subplot( 4, 2, 4 );
+plot( ts, squeeze( ys( 5, 2, : ) ) );
+ylabel( 'Excitatory integral' );
+
 % Plot the inhibitory neuron:
-subplot( 4, 1, 3 );
+subplot( 4, 2, 5 );
 plot( ts, squeeze( ys( 1, 3, : ) ) );
 ylabel( 'Inhibitory Stimulus' ); 
 
 % Plot the inhibitory neuron:
-subplot( 4, 1, 4 );
-plot( ts, squeeze( ys_mem( 1, : ) ) );
-ylabel( 'Spike rate' ); 
+subplot( 4, 2, 6 );
+plot( ts, squeeze( ys( 5, 3, : ) ) );
+ylabel( 'Inhibitory Integral' );
+
+% Plot the inhibitory neuron:
+subplot( 4, 2, 7 );
+plot( ts, ys_mem( 1, : ) );
+ylabel( 'Memory neuron spike rate' ); 
+
+% Plot the inhibitory neuron:
+subplot( 4, 2, 8 );
+plot( ts, ys_mem( 5, : ) );
+ylabel( 'Memory neuron integral' ); 

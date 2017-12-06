@@ -12,6 +12,5 @@ function dydt = neuron( t, y, ext, tau )
 	sigma_s = 2; % mV, pg 174
 	
 	s = (alpha .* (1 - y(5)) .* 1./(1 + exp(-(y(1)-theta_s)./sigma_s)) - y(5)) ./ tau;
-	
 	dydt = [ dydt; s ];
 end
