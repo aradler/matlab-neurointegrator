@@ -2,7 +2,6 @@ function dydt = neuron( t, y, ext, tau )
 	I_intrinsic = intrinsic_current( y(1), y(2), y(3), y(4) );
 	dydt = I_intrinsic + [ext; 0; 0; 0];
 
-	
 	alpha = 1; % to make the effects of synaptic saturation weak, pg 174
 	% tau_0 = 100;
 	% tau_burst = 5;
