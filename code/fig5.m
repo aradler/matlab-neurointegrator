@@ -96,5 +96,5 @@ ylabel( 'Memory neuron spike rate' );
 
 % Plot the inhibitory neuron:
 subplot( 4, 2, 8 );
-plot( ts, ys_mem( 5, : ) );
+plot( ts, spike_rate( ys_mem( 1, : ), ts ) );
 ylabel( 'Memory neuron integral' ); 
