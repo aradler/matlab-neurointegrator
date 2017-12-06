@@ -30,20 +30,20 @@ for n = 1:(length( ts )-1)
 	ys(:, n+1) = ys(:, n) + (dt / 6 .* (k1 + 2*k2 + 2*k3 + k4));
 end
 
-subplot( 2, 2, 1 );
+subplot( 4, 1, 1 );
 plot( ts, ext( ts ) );
 ylabel( 'Membrane Conductance' );
 ylim( [-0.5, 3.5] );
 
-subplot( 2, 2, 2 )
+subplot( 4, 1, 2 )
 plot( ts, ys( 1, : ) );
 ylabel( 'Neuron potential' );
 
-subplot( 2, 2, 3 );
+subplot( 4, 1, 3 );
 plot( ts, ys( 5, : ) );
 ylabel( 'Placeholder for summation' );
 
-subplot( 2, 2, 4 );
+subplot( 4, 1, 4 );
 plot( ts, ys(2:4, : ) )
 ylabel( 'Conductance of different ion channels' )
 legend( 'Sodium conductance', ...
