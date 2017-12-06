@@ -4,7 +4,7 @@ function dydt = memory_neuron( t, y, ext_y, tau )
 
 	W = 1.882;
 	W_e = 1;
-	W_i = -4;
+	W_i = 4;
 	W_0 = 3.8;
 	
 	V_e = 0;
@@ -28,7 +28,7 @@ function dydt = memory_neuron( t, y, ext_y, tau )
 	% Excitatory conductance:
 	dydt = dydt - [g_E .* ( y(1) - V_e ); 0; 0; 0];
 	% Inhibitory conductance:
-	dydt = dydt + [g_I .* ( y(1) - V_i ); 0; 0; 0];
+	dydt = dydt - [g_I .* ( y(1) - V_i ); 0; 0; 0];
 	
 	% Add the integral term on the end
 	dydt = [ dydt; dsdt ];
