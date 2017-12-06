@@ -18,10 +18,18 @@ function dydt = memory_neuron( t, y, ext_y, tau )
 	theta_s = -20; % mV, pg 174
 	sigma_s = 2; % mV, pg 174
 	
-	dsdt = (alpha .* (1 - y(5)) .* 1./(1 + exp(-(y(1)-theta_s)./sigma_s)) - y(5)) ./ tau;
+	% dsdt = (alpha .* (1 - y(5)) .* 1./(1 + exp(-(y(1)-theta_s)./sigma_s)) - y(5)) ./ tau;
+	dsdt = (alpha * (1-y(5)) * 1/(1 + exp(-(y(1)-theta_s)/sigma_s)) - y(5)) / tau;
 	g_E = W * y(5) + W_0 * ext_y(5, 1) + W_e * ext_y(5, 2);
 	g_I = W_i * ext_y(5, 3);
-
-	dydt = I_intrinsic - [g_E * ( y(1) - V_e ) + g_I * ( y(1) - V_i ); 0; 0; 0];
+	
+	% Intrinsic currents:
+	dydt = I_intrinsic;
+	% Excitatory conductance:
+	dydt = dydt - [g_E .* ( y(1) - V_e ); 0; 0; 0];
+	% Inhibitory conductance:
+	dydt = dydt + [g_I .* ( y(1) - V_i ); 0; 0; 0];
+	
+	% Add the integral term on the end
 	dydt = [ dydt; dsdt ];
 end
