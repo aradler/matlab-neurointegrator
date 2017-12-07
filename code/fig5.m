@@ -62,47 +62,63 @@ end
 
 %% Plotting:
 
+subplots_x = 5;
+subplots_y = 1;
+subplots_inc = 1;
+
 % Plot the tonic neuron:
-subplot( 4, 1, 1 );
+subplot( subplots_x, subplots_y, subplots_inc );
 plot( ts, squeeze( ys( 1, 1, : ) ) );
-ylabel( 'Tonic stimulus', 'FontSize', 7 );
+ylabel( 'Tonic neuron (mV)', 'FontSize', 7 );
+
+title( 'Simple step-based integrator test' );
+
+subplots_inc = subplots_inc + 1;
 
 % % Plot the tonic neuron:
-% subplot( 4, 1, 2 );
+% subplot( subplots_x, 1, 2 );
 % plot( ts, squeeze( ys( 5, 1, : ) ) );
 % ylabel( 'Tonic integral' );
 
 % Plot the excitatory neuron:
-subplot( 4, 1, 2 );
+subplot( subplots_x, subplots_y, subplots_inc );
 plot( ts, squeeze( ys( 1, 2, : ) ) );
-ylabel( 'Excitatory stimulus', 'FontSize', 7 );
+ylabel( 'Excitatory neuron (mV)', 'FontSize', 7 );
+
+subplots_inc = subplots_inc + 1;
 
 % % Plot the excitatory neuron:
-% subplot( 4, 2, 4 );
+% subplot( subplots_x, 2, 4 );
 % plot( ts, squeeze( ys( 5, 2, : ) ) );
 % ylabel( 'Excitatory integral' );
 
 % Plot the inhibitory neuron:
-subplot( 4, 1, 3 );
+subplot( subplots_x, subplots_y, subplots_inc );
 plot( ts, squeeze( ys( 1, 3, : ) ) );
-ylabel( 'Inhibitory Stimulus', 'FontSize', 7 ); 
+ylabel( 'Inhibitory neuron (mV)', 'FontSize', 7 ); 
+
+subplots_inc = subplots_inc + 1;
 
 % % Plot the inhibitory neuron:
-% subplot( 4, 2, 6 );
+% subplot( subplots_x, 2, 6 );
 % plot( ts, squeeze( ys( 5, 3, : ) ) );
 % ylabel( 'Inhibitory Integral' );
 
 % Plot the inhibitory neuron:
-subplot( 4, 1, 4 );
+subplot( subplots_x, subplots_y, subplots_inc );
 plot( ts, ys_mem( 1, : ) );
-ylabel( 'Memory neuron spike rate', 'FontSize', 7 ); 
+ylabel( 'Memory neuron (mV)', 'FontSize', 7 ); 
 
-% % Plot the inhibitory neuron:
-% subplot( 4, 2, 8 );
-% plot( ts, ys_mem( 5, : ) );
-% ylabel( 'Memory neuron integral' ); 
+subplots_inc = subplots_inc + 1;
+
+% Plot the inhibitory neuron:
+subplot( subplots_x, 1, subplots_inc );
+plot( ts, spike_rate(ys_mem( 1, : ), ts) );
+ylabel( 'Memory neuron rate (Hz)', 'FontSize', 7 ); 
+xlabel( 'Time (milliseconds)' ); 
 
 % Plotting export and configuration:
+set(gca,'color','none') 
 set(gcf, 'Units', 'Inches', 'Position', [0.125, 0.125, 5.875, 5.875], 'PaperUnits', 'Inches', 'PaperSize', [6, 6]);
 saveas(gcf, '../figures/fig5.pdf');
 saveas(gcf, '../figures/fig5.png');
