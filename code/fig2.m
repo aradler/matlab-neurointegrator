@@ -30,25 +30,45 @@ for n = 1:(length( ts )-1)
 	ys(:, n+1) = ys(:, n) + (dt / 6 .* (k1 + 2*k2 + 2*k3 + k4));
 end
 
-subplot( 4, 1, 1 );
+subplot( 3, 1, 1 );
 plot( ts, ext( ts ) );
 ylabel( 'Membrane Conductance' );
 ylim( [-0.5, 3.5] );
 
-subplot( 4, 1, 2 )
+subplot( 3, 1, 2 )
 plot( ts, ys( 1, : ) );
 ylabel( 'Neuron potential' );
 
-subplot( 4, 1, 3 );
+subplot( 3, 1, 3 );
 plot( ts, ys( 5, : ) );
-ylabel( 'Placeholder for summation' );
+ylabel( 'Ratio of open channels' );
 
-subplot( 4, 1, 4 );
-plot( ts, ys(2:4, : ) )
-ylabel( 'Conductance of different ion channels' )
-legend( 'Sodium conductance', ...
-		'Delayed rectifier potassium conductance', ...
-		'A-type potassium conductance' );
+% subplot( 4, 1, 4 );
+% plot( ts, ys(2:4, : ) )
+% ylabel( 'Conductance of different ion channels' )
+% legend( 'Sodium conductance', ...
+% 		'Delayed rectifier potassium conductance', ...
+% 		'A-type potassium conductance' );
 xlabel( 'Time (milliseconds)' );
 
-hold on
+% Plotting export and configuration:
+set(gca,'color','none') 
+set(gcf, 'Units', 'Inches', 'Position', [0.125, 0.125, 5.875, 5.875], 'PaperUnits', 'Inches', 'PaperSize', [6, 6]);
+saveas(gcf, '../figures/fig2.pdf');
+saveas(gcf, '../figures/fig2.png');
+
+close all;
+
+plot( ts( 14000:17000 ), ys(2:4, 14000:17000) );
+xlabel( 'Time (milliseconds)' );
+ylabel( 'Ion channel conductance (mS/cm^2)' )
+legend( 'Sodium conductance', ...
+ 		'Delayed rectifier potassium conductance', ...
+ 		'A-type potassium conductance' );
+
+% Plotting export and configuration:
+set(gca,'color','none') 
+set(gcf, 'Units', 'Inches', 'Position', [0.125, 0.125, 5.875, 5.875], 'PaperUnits', 'Inches', 'PaperSize', [6, 6]);
+saveas(gcf, '../figures/fig2a.pdf');
+saveas(gcf, '../figures/fig2a.png');
+
