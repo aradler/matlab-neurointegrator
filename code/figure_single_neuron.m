@@ -30,6 +30,9 @@ for n = 1:(length( ts )-1)
 	ys(:, n+1) = ys(:, n) + (dt / 6 .* (k1 + 2*k2 + 2*k3 + k4));
 end
 
+title( 'Behavior of a single neuron with a 3 uA/cm^2 stimulus' );
+
+
 subplot( 3, 1, 1 );
 plot( ts, ext( ts ) );
 ylabel( 'Membrane Conductance' );
@@ -65,6 +68,7 @@ ylabel( 'Ion channel conductance (mS/cm^2)' )
 legend( 'Sodium conductance', ...
  		'Delayed rectifier potassium conductance', ...
  		'A-type potassium conductance' );
+title( 'Ion conductances from a single spike' );
 
 % Plotting export and configuration:
 set(gca,'color','none') 

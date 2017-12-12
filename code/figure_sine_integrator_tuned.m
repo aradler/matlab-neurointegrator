@@ -5,23 +5,23 @@ clc;
 % Define our input function. For this example, we will be integrating a
 % sine function with a relatively reasonable amplitude (0.2 ) and a period
 % slow enough (4 seconds) that the neuron is not overwhelmed. 
-in_func = @(t) 3 * sin( t * pi / 2000 );
+in_func = @(t) sin( t * pi / 2000 );
 
 % Tonic external current. The applied current is 3 uA/cm^2
 ext_T = @( t ) 3;
 
 % Excitatory external current. For this figure, this will be the positive
 % half of the input sine wave.
-ext_E = @( t ) max( in_func(t), 0 );
+ext_E = @( t ) max( in_func(t), 0 ) + 1.9;
 % Inhibitory external current. This will be the negative half of the
 % applied current
-ext_I = @( t ) -min( in_func(t), 0 );
+ext_I = @( t ) -min( in_func(t), 0 ) + 1.9;
 
 ext = @( t ) [ ext_T(t) ext_E(t) ext_I(t) ];
 
 [ts, ys, ys_mem] = memory_neuron_sim( 6000, 0.001, ext ); 
 
-save( '../data/sine_integrator', 'ts', 'ys', 'ys_mem' );
+save( '../data/sine_integrator_tuned', 'ts', 'ys', 'ys_mem' );
 
 %% Plotting:
 
@@ -32,8 +32,7 @@ subplots_y = 2;
 subplot( subplots_x, subplots_y, [1 2] );
 plot( ts, in_func( ts ), 'r' );
 ylabel( 'Input Function', 'FontSize', 8 );
-
-title( 'Simple sine integrator test' );
+title( 'Tuned memory neuron integrating a sine function' );
 
 %
 % Excitatory:
@@ -80,5 +79,5 @@ xlabel( 'Time (milliseconds)' );
 
 % Plotting export and configuration:
 set(gcf, 'Units', 'Inches', 'Position', [0.125, 0.125, 5.875, 5.875], 'PaperUnits', 'Inches', 'PaperSize', [6, 6]);
-saveas(gcf, '../figures/fig5_sine.pdf');
-saveas(gcf, '../figures/fig5_sine.png');
+saveas(gcf, '../figures/memory-sine-tuned.pdf');
+saveas(gcf, '../figures/memory-sine-tuned.png');
